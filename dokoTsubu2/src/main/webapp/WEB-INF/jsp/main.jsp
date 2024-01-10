@@ -21,7 +21,7 @@
   <c:if test="${not empty errorMsg}">
     <p><c:out value="${errorMsg}" /></p>
   </c:if>
-  <c:forEach var="m" items="${requestScope.mutterList}">
+  <c:forEach var="m" items="${mutterList}">
     <p><c:out value="${m.userName}:${m.text}" /></p>
   </c:forEach>
 </body>
