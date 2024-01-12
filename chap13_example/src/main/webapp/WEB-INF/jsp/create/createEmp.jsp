@@ -9,20 +9,31 @@
 <main>
   <article>
 	<h2>新規社員登録</h2>
-	<form action="create" method="post">
+	<ul>
+		<c:forEach var="errMsg" items="${errors}">
+			<li class="errMsg"><c:out value="${errMsg}" /></li>
+		</c:forEach>
+	</ul>
+	<form action="createConfirm" method="post">
 	  <ul>
 	    <li>
-	      <label>ID:<input type="text" name="id"></label>
+	      <label>ID:<input type="text" name="id"
+	      					value="<c:out value="${emp.id}" />">
+	      </label>
 	    </li>
 	    <li>
-	      <label>名前:<input type="text" name="name"></label>
+	      <label>名前:<input type="text" name="name"
+	      					value="<c:out value="${emp.name}" />">
+	      </label>
 	    </li>
 	    <li>
-	      <label>年齢:<input type="number" name="age"></label>
+	      <label>年齢:<input type="number" name="age"
+	      					value="<c:out value="${emp.age}" />">
+	      </label>
 	    </li>
 	  </ul>
-	  <input type="submit" value="確認">
-	  <input type="submit" value="取消"
+	  <input type="submit" value="登録確認">
+	  <input type="submit" value="一覧"
 	  	formaction="list" formmethod="get">
 	</form>
   </article>

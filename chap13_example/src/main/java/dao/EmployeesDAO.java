@@ -17,8 +17,7 @@ public class EmployeesDAO {
 	private final String DB_PASS = "";
 	private final String SQL_FIND_ALL = "SELECT id,name,age FROM employees";
 	
-	public List<Employee> findAll() {
-		List<Employee> empList = new ArrayList<>();
+	private void registerDriver() {
 		try {
 //			DriverManagerに org.h2.Driber を登録する
 			Class.forName("org.h2.Driver");
@@ -26,6 +25,13 @@ public class EmployeesDAO {
 			throw new IllegalStateException
 				("JDBCドライバの読み込みエラー");
 		}
+	}
+
+	
+	public List<Employee> findAll() {
+		List<Employee> empList = new ArrayList<>();
+		registerDriver();
+		
 		try (Connection conn = DriverManager.getConnection(
 				JDBC_URL, DB_USER, DB_PASS)) {
 			PreparedStatement pStmt = conn.prepareStatement(SQL_FIND_ALL);
@@ -48,12 +54,7 @@ public class EmployeesDAO {
 	}
 	
 	public boolean create(Employee emp) {
-		try {
-			Class.forName("org.h2.Driver");
-		} catch (ClassNotFoundException e) {
-			throw new IllegalStateException
-				("JDBCドライバの読み込みエラー");
-		}
+		registerDriver();
 		
 		try (Connection conn = DriverManager.getConnection(
 				JDBC_URL, DB_USER, DB_PASS)){
@@ -74,11 +75,7 @@ public class EmployeesDAO {
 	}
 	
 	public boolean remove(String id) {
-		try {
-			Class.forName("org.h2.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		registerDriver();
 		
 		try (Connection conn = DriverManager.getConnection(
 				JDBC_URL, DB_USER, DB_PASS)){
@@ -91,5 +88,26 @@ public class EmployeesDAO {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+//	すでに存在するIDなら true
+	public boolean isExistsId(String id) {
+		registerDriver();
+		
+		try (Connection conn = DriverManager.getConnection(
+				JDBC_URL, DB_USER, DB_PASS)){
+			String sql = "SELECT id FROM employees WHERE id = ?;";
+//			String sql = "SELECT COUNT(*) id FROM employees WHERE id = ?;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, id);
+			ResultSet rs = pStmt.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return true;
+		}
+		return false;
 	}
 }

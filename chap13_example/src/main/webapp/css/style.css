@@ -2,11 +2,18 @@
 
 body {
 	margin: 0;
-	text-align: center;
 }
 
 h1, h2 {
 	margin: 0;
+}
+
+a {
+	color: gray;
+}
+
+a:visited {
+	color: gray;
 }
 
 header {
@@ -26,7 +33,12 @@ main {
 	height: 80vh;
 }
 
-ul {	
+article {
+	margin: 0 2%;
+}
+
+ul {
+	padding: 0;
 }
 
 li {
@@ -46,12 +58,16 @@ th, td {
 	padding: 5px 8px;
 }
 
+.errMsg {
+	color: red;
+}
+
 aside {
 	text-align: left;
-	width: 30%;
+	width: 35%;
 }
 
 footer {
-	position: static;
+	position: sticky;
 	bottom: 0;
 }

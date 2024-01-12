@@ -21,7 +21,7 @@ public class RegisterEmpServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		int age = Tools.myParseInt(request.getParameter("age"));
 		Employee emp = new Employee(id, name, age);
-		System.out.println(emp);
+//		System.out.println(emp);
 //		emp の入力値チェックが必要
 //		エラーがあれば createEmp.jsp に戻る
 //		エラーメッセージを送る
