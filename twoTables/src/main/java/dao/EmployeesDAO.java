@@ -8,17 +8,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Dept;
 import model.Employee;
 
 public class EmployeesDAO {
 	private final String JDBC_URL =
 //			h2 database
-			"jdbc:h2:tcp://localhost/~/example";
+			"jdbc:h2:tcp://localhost/~/twoTables";
 //			my sql database
 //			"jdbc:mysql://localhost:3306/example";
 	private final String DB_USER = "sa";
 	private final String DB_PASS = "";
-	private final String SQL_FIND_ALL = "SELECT id,name,age FROM employees";
+	private final String SQL_FIND_ALL =
+			"SELECT"
+			+ "  e.id AS id, "
+			+ "  e.name AS name, "
+			+ "  e.age AS age, "
+			+ "  d.id AS did, "
+			+ "  d.name AS dname "
+			+ "FROM employees e "
+			+ "  LEFT OUTER JOIN dept d "
+			+ "  ON e.dept_id = d.id "
+			+ "ORDER BY e.id;";
 	
 	private void registerDriver() {
 		try {
@@ -49,8 +60,11 @@ public class EmployeesDAO {
 				String id = rs.getString("id");
 				String name = rs.getString("name");
 				int age = rs.getInt("age");
+				String did = rs.getString("did");
+				String dname = rs.getString("dname");
+				Dept dept = new Dept(did, dname);
 				
-				Employee employee = new Employee(id, name, age);
+				Employee employee = new Employee(id, name, age, dept);
 				empList.add(employee);
 			}
 		} catch (SQLException e) {
@@ -60,6 +74,7 @@ public class EmployeesDAO {
 		return empList;
 	}
 	
+//	未改修
 	public boolean create(Employee emp) {
 		registerDriver();
 		
@@ -81,6 +96,7 @@ public class EmployeesDAO {
 		}
 	}
 	
+//	未改修
 	public boolean remove(String id) {
 		registerDriver();
 		

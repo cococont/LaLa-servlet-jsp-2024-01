@@ -1,6 +1,10 @@
---h2database: example
---ユーザー名: sa
---パスワード: （なし）
+CREATE USER 'sa'@'localhost' IDENTIFIED BY '';
+GRANT ALL ON example.* to 'sa'@'localhost';
+
+CREATE DATABASE IF NOT EXISTS example;
+USE example;
+
+DROP TABLE IF EXISTS employees;
 
 CREATE TABLE employees (
   id CHAR(6) PRIMARY KEY,
