@@ -11,16 +11,12 @@
     <table>
 	    <tr>
 	      <th>ID</th>
-	      <th>名前</th>
-	      <th>年齢</th>
-	      <th>部署</th>
+	      <th>部署名</th>
 	    </tr>
-    <c:forEach var="e" items="${empList}">
+    <c:forEach var="d" items="${deptList}">
       <tr>
-        <td><c:out value="${e.id}" /></td>
-        <td><c:out value="${e.name}" /></td>
-        <td><c:out value="${e.age}" /></td>
-        <td><c:out value="${e.dept.name}" /></td>
+        <td><c:out value="${d.id}" /></td>
+        <td><c:out value="${d.name}" /></td>
         <td class="no-border">
         	<form action="update" method="post">
         		<button type="submit">編集</button>
